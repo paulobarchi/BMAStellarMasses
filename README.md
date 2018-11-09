@@ -9,21 +9,24 @@ https://github.com/SSantosLab/vt-clustertools/tree/master/BMAStellarMasses
 
 ### File structure
 
-Copy (or clone) these files to your directory ("<user>/BMAStellarMass/", for example)
+Copy (or clone) these files to your directory ("/BMAStellarMass/", for example)
 
 File structure needed:
-.
-├── BMA_StellarMass_Config.ini
-├── BMA_StellarMass.py
-├── clusterSMass_orig.py
-├── combineCat.py
-├── CosmologicalDistance.py
-├── fileStructureNeeded.txt
-├── helperfunctions.py
-├── loadPopColors.py
-├── README.txt
-├── runBMA_StellarMass.sh
-└── smass.py
+
+
+	.
+	|-- BMA_StellarMass_Config.ini
+	|-- BMA_StellarMass.py
+	|-- clusterSMass_orig.py
+	|-- combineCat.py
+	|-- CosmologicalDistance.py
+	|-- fileStructureNeeded.txt
+	|-- helperfunctions.py
+	|-- loadPopColors.py
+	|-- README.txt
+	|-- runBMA_StellarMass.sh
+	`-- smass.py
+
 
 ### Configuration File
 
@@ -44,6 +47,28 @@ If you desire to run only the stellar mass code, your [Operations] section would
 
     stellarMass: True
     clusterStellarMass: False
+
+Complete example of configuration file (without comments):
+
+	[Paths]
+	inputPath: /des/des61.a/data/pbarchi/clusters/test/
+
+	[Files]
+	membersInputFile: /des/des61.a/data/pbarchi/clusters/test/test_johnny_members.fits
+	stellarMassOutPrefix: /des/des61.a/data/pbarchi/clusters/test/testStellarMasses_
+	clusterStellarMassOutFile: /des/des61.a/data/pbarchi/clusters/test/testClusterStellarMasses_full.fits
+	timeFile: /des/des61.a/data/pbarchi/clusters/test/BMA-StellarMass-Time.out
+
+	[Operations]
+	stellarMass: True
+	clusterStellarMass: True
+
+	[Parallel]
+	batchStart: 0
+	batchMax: 146737
+	nJobs: 100
+	nCores: 20
+
 
 ## Running
 
