@@ -85,15 +85,15 @@ If you already have an activated astro environment you can just run the python s
 
 In runBMA_StellarMass_bckp.sh there is a function to activate the environment:
 
-  activateEnvironment() {
-	  # setting up anaconda
-	  export CONDA_DIR=/cvmfs/des.opensciencegrid.org/fnal/anaconda2
-	  source $CONDA_DIR/etc/profile.d/conda.sh
-	  # activating base
-  	conda activate base
-  	# activating astro environment
-  	conda activate des18a
-  }
+	activateEnvironment() {
+		# setting up anaconda
+		export CONDA_DIR=/cvmfs/des.opensciencegrid.org/fnal/anaconda2
+		source $CONDA_DIR/etc/profile.d/conda.sh
+		# activating base
+ 		conda activate base
+ 		# activating astro environment
+ 		conda activate des18a
+  	}
 
 ## Test in a minimal example
 
