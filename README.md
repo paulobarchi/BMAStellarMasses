@@ -9,7 +9,7 @@ https://github.com/SSantosLab/vt-clustertools/tree/master/BMAStellarMasses
 
 ### File structure
 
-Copy (or clone) these files to your directory ("/BMAStellarMass/", for example)
+Copy (or clone) the files in this repository to your directory ("/BMAStellarMass/", for example).
 
 File structure needed:
 
@@ -83,7 +83,7 @@ If you already have an activated astro environment you can just run the python s
 
 ### Activating environment
 
-In runBMA_StellarMass_bckp.sh there is a function to activate the environment:
+In the bash script runBMA_StellarMass_bckp.sh there is a function to activate the environment:
 
 	activateEnvironment() {
 		# setting up anaconda
@@ -97,6 +97,7 @@ In runBMA_StellarMass_bckp.sh there is a function to activate the environment:
 
 ## Test in a minimal example
 
+It would be good to have a minimal example to test (benchmark time and compare outputs).
 
 ## Authors
 
