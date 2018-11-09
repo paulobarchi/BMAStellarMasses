@@ -77,6 +77,7 @@ With the config file set up, run it with:
     bash runBMA_StellarMass_bckp.sh
     
 This script activates the necessary environment and calls the main script BMA_StellarMass.py.
+
 If you already have an activated astro environment you can just run the python script:
 
     python BMA_StellarMass.py
