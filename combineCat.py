@@ -18,7 +18,7 @@ def loadfiles(filenames, columns=None):
     return np.concatenate(out)
 
 def printCompleteMsg(outFile):
-    print '\n--> Status: File Complete <{outFile}>\n'.format(outFile=outfile)
+    print '\n--> Status: File Complete <{outFile}>\n'.format(outFile=outFile)
 
 
 # For combining afterburner outputs on mof healpixed data
@@ -124,7 +124,7 @@ def combineAfterBurnerOutputs():
         names = ['COADD_OBJECTS_ID','HOST_HALOID','RA','DEC','ZP','ZPE','MAG_AUTO_G','MAG_AUTO_R','MAG_AUTO_I','MAG_AUTO_Z','P_RADIAL','P_REDSHIFT','GR_P_COLOR','RI_P_COLOR','IZ_P_COLOR','P_MEMBER','AMAG_R','DIST_TO_CENTER','GRP_RED','GRP_BLUE','GRP_BG','RIP_RED','RIP_BLUE','IZP_RED','IZP_BLUE','GR0','HOST_REDSHIFT','HOST_REDSHIFT_ERR','MAGERR_AUTO_G','MAGERR_AUTO_R','MAGERR_AUTO_I','MAGERR_AUTO_Z']
         array_list = [hostid,zg,galid,gro,gro_err,gio,gio_err,kri,kri_err,kii,kii_err,iobs,distmod,rabs,iabs,mcMass,taMass,mass,mass_err,ssfr,ssfr_std,mass_weight_age,mass_weight_age_err,best_model,best_zmet,zmet,best_chisq,grpc,ripc,izpc,grpm,ripm]
         fits.write(array_list, names=names)
-    printCompleteMsg(outfile):
+    printCompleteMsg(outfile)
 
 
 # For combining the standard outputs of the BMA computeStellarMass 
