@@ -136,7 +136,7 @@ def combineBMAStellarMassOutput(stellarMassOutPrefix):
     fileNames = sorted(glob.glob(stellarMassOutPrefix+'*'))
     # Call function and load all data sets
     data = loadfiles(fileNames) 
-    outFile = stellarMassOutPrefix + '_full.fits'
+    outFile = stellarMassOutPrefix + 'full.fits'
 
     # Define BMA stellar mass column names for printing
     hostid = data['MEM_MATCH_ID'][:]
