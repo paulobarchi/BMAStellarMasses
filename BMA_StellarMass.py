@@ -18,6 +18,10 @@ def getConfig(section, item, boolean=False,
 	else:
 		return configFile.getboolean(section, item)
 
+def isOperationSet(operation,section="Operations"):	
+	return getConfig(boolean=True, section=section, 
+		item=operation)	
+	
 def combineFits():
 	from combineCat import combineBMAStellarMassOutput
 	stellarMassOutPrefix = \
@@ -40,7 +44,7 @@ def computeStellarMass(batch, memPerJob):
 
 def computeClusterStellarMass():
 	stellarMassFile = getConfig(
-		"Files","stellarMassOutPrefix") + '_full.fits'
+		"Files","stellarMassOutPrefix") + 'full.fits'
 	clusterOutFile  = getConfig(
 		"Files","clusterStellarMassOutFile")
 	print "Compuing cluster stellar mass."
@@ -82,14 +86,17 @@ def parallelComputeStellarMass(batchStart=0,
 	print "Combining fits."
 	combineFits()
 
-def isOperationSet(operation,section="Operations"):	
-	return getConfig(boolean=True, section=section, 
-		item=operation)
-
 def writeStringToFile(fileName, toBeWritten):
-	with open(fileName, 'w') as f:
-		f.write( '{toBeWritten}\n'.format(
-			toBeWritten=toBeWritten) )
+        # create file if it does not exist
+        if not path.isfile(fileName):
+                with open(fileName, 'w') as f:
+                        f.write( '{toBeWritten}\n'.format(
+                                toBeWritten=toBeWritten) )
+        # else, append to file  
+        else:
+             	with open(fileName, 'a') as f:
+                        f.write( '{toBeWritten}\n'.format(
+                                toBeWritten=toBeWritten) )
 
 def main():
 	print "Starting BMA Stellar Masses program."
@@ -109,17 +116,15 @@ def main():
 		batchMax   = int(getConfig("Parallel", "batchMax"))
 		nJobs 	   = int(getConfig("Parallel", "nJobs"))
 		nCores 	   = int(getConfig("Parallel", "nCores"))
-		print "batchStart = {}".format(batchStart)
-		print "batchMax   = {}".format(batchMax)
-		print "nJobs	  = {}".format(nJobs)
-		print "nCores	  = {}".format(nCores)
+		
 		# call function to parallel compute 
 		parallelComputeStellarMass(batchStart=batchStart,
 			batchMax=batchMax, nJobs=nJobs, nCores=nCores)
 	
 		# save time to compute stellar mass    
-		stellarMassTime = time() - stellarMass_t0
-		writeStringToFile(timeFile, stellarMassTime)
+                stellarMassTime = time() - stellarMass_t0
+                stellarMassMsg = "Stellar Mass (parallel) time: {}s".format(stella$
+                writeStringToFile(timeFile, stellarMassMsg)
 
 	# check and compute cluster stellar mass, 
 	#	if it is the case
@@ -127,14 +132,18 @@ def main():
 		print "Starting cluster stellar mass operation."
 		clusterStellarMassTime_t0 = time()
 		computeClusterStellarMass()
+
 		# save time to compute cluster stellar mass
-		clusterStellarMassTime = time() - \
-			clusterStellarMassTime_t0
-		writeStringToFile(timeFile, clusterStellarMassTime)
+                clusterStellarMassTime = time() - \
+                        clusterStellarMassTime_t0
+                clusterStellarMassMsg = "Cluster Stellar Mass time: {}s".format(cl$
+                writeStringToFile(timeFile, clusterStellarMassMsg)
 
 	# save total computing time 
-	totalTime = time() - total_t0
-	writeStringToFile(timeFile, totalTime)
+        totalTime = time() - total_t0
+        totalTimeMsg = "Total time: {}s".format(totalTime)
+        writeStringToFile(timeFile, totalTimeMsg)
+					
 	print "All done."
 
 if __name__ == "__main__":
