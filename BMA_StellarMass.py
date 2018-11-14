@@ -123,20 +123,20 @@ def main():
 	
 		# save time to compute stellar mass    
                 stellarMassTime = time() - stellarMass_t0
-                stellarMassMsg = "Stellar Mass (parallel) time: {}s".format(stella$
+                stellarMassMsg = "Stellar Mass (parallel) time: {}s".format(stellarMassTime)
                 writeStringToFile(timeFile, stellarMassMsg)
 
-	# check and compute cluster stellar mass, 
-	#	if it is the case
-	if (isOperationSet(operation="clusterStellarMass")):
-		print "Starting cluster stellar mass operation."
-		clusterStellarMassTime_t0 = time()
-		computeClusterStellarMass()
+        # check and compute cluster stellar mass, 
+        #       if it is the case
+        if (isOperationSet(operation="clusterStellarMass")):
+                print "Starting cluster stellar mass operation."
+                clusterStellarMassTime_t0 = time()
+                computeClusterStellarMass()
 
-		# save time to compute cluster stellar mass
+                # save time to compute cluster stellar mass
                 clusterStellarMassTime = time() - \
                         clusterStellarMassTime_t0
-                clusterStellarMassMsg = "Cluster Stellar Mass time: {}s".format(cl$
+                clusterStellarMassMsg = "Cluster Stellar Mass time: {}s".format(clusterStellarMassTime)
                 writeStringToFile(timeFile, clusterStellarMassMsg)
 
 	# save total computing time 
