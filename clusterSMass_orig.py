@@ -20,7 +20,11 @@ def lambda_star_jk(weightedmass):
     return (weightedmass.sum())/10.**10.
 
 
-def haloStellarMass ( filename="vt-stellar-masses.txt", outfile="vt-halos-stellar-masses.txt", verbose=1 ) :
+def haloStellarMass (filename="vt-stellar-masses.txt", outfile="vt-halos-stellar-masses.txt") :
+
+    import logging
+
+    logging.info('Starting clusterSMass_orig.haloStellarMass()')
 
     #ra,dec,z,zerr,id,central,hostid, gr,gre, gi,gie, kri,krie, kii,kiie, \
     #    i,distmod,rabs,iabs, mcMass, taMass, maiss, std = np.genfromtxt(filename, unpack=True)
@@ -95,15 +99,12 @@ def haloStellarMass ( filename="vt-stellar-masses.txt", outfile="vt-halos-stella
     idx_bad = (IZP_BLUE <0.0001)
     IZP_BLUE[idx_bad] = 0.0001
 
-
-    #fd = open(outfile,"w")
-
     halos = np.unique(hostid)
     halos = np.sort(halos)
-    if verbose: print "# hostid z median(ra) median(dec) median(z) ngals log(stellar_mass)  (h=0.7, Om=0.3, flat)"
-    if verbose: print "hostid, ngals, sum_mass, sum_mass_std, lambda_iz, mass_std_iz, lambda_gr_err_jk, ssfr_weight_iz"
-    #fd.write("# halo, ngals, sum_mass, sum_mass_std, lambda_gr,lambda_gr_err_jk, lambda_ri, lambda_ri_err_jk,lambda_iz,lambda_iz_err_jk, lambda_gr_red, lambda_ri_red, lambda_iz_red,lambda_iz_red_err_jk, lambda_gr_blue, lambda_ri_blue, lambda_iz_blue,lambda_iz_blue_err_jk\n")
 
+    # logging.debug('# hostid z median(ra) median(dec) median(z) ngals log(stellar_mass)  (h=0.7, Om=0.3, flat)')
+    logging.debug('hostid, ngals, sum_mass, sum_mass_std, lambda_iz, mass_std_iz, lambda_gr_err_jk, ssfr_weight_iz')
+   
     for halo in halos:
         ix = np.nonzero(hostid == halo)
         #zmedian = np.median(z[ix])
@@ -177,7 +178,6 @@ def haloStellarMass ( filename="vt-stellar-masses.txt", outfile="vt-halos-stella
         #TO UNCOMMENT!!!!!!!
         #M200_GMM = M200[ix[0][0]]
         zout = z[ix[0][0]]
-        #iz_flag = IZ_SEP_FLAG[ix[0][0]]
 
         halo_out.append(halo)
         zout_out.append(zout)
@@ -196,17 +196,9 @@ def haloStellarMass ( filename="vt-stellar-masses.txt", outfile="vt-halos-stella
         lambda_iz_blue_err_jk_out.append(lambda_iz_blue_err_jk)
         ssfr_weight_iz_out.append(ssfr_weight_iz)
 
-        if verbose: 
-            print "{:10d}  {:4d}   {:6.3f}   {:6.3f} {:6.4f} {:6.3f} {:6.4f} {:6.4f}".format(halo, ngals, sum_mass, sum_mass_std,lambda_iz,mass_std_iz,lambda_gr_err_jk,ssfr_weight_iz)
-        #Very latest
-        #fd.write("{:10d}  {:4d} {:6.3f} {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f}  {:6.3f} {:6.3f} {:6.3f} {:6.3f}  {:6.3f} {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f} {:6.3f} {:6.3f}\n".format(halo, ngals, zout, sum_mass, sum_mass_std, lambda_gr,lambda_gr_err_jk, lambda_ri, lambda_ri_err_jk,lambda_iz,lambda_iz_err_jk, lambda_gr_red, lambda_ri_red, lambda_iz_red,lambda_iz_red_err_jk, lambda_gr_blue, lambda_ri_blue, lambda_iz_blue,lambda_iz_blue_err_jk,ssfr_weight_iz))
-        #LATEST:
-        #fd.write("{:10d} {:6.3f}  {:6.3f}     {:4d}      {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f}  {:6.3f} {:6.3f} {:6.3f} {:6.3f}  {:6.3f} {:6.3f} {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f} {:6.3f} {:2.3f}\n".format(halo,zout, zmedian, ngals, sum_mass, sum_mass_std, lambda_gr,lambda_gr_err_jk, lambda_ri, lambda_ri_err_jk,lambda_iz,lambda_iz_err_jk,M200_GMM, lambda_gr_red, lambda_ri_red, lambda_iz_red,lambda_iz_red_err_jk, lambda_gr_blue, lambda_ri_blue, lambda_iz_blue,lambda_iz_blue_err_jk,iz_flag))
-        #fd.write("{:10d} {:6.3f}  {:6.3f}     {:4d}      {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f} {:6.3f} {:6.3f}  {:6.3f} {:6.3f} {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f} {:6.3f} {:10d}\n".format(halo,zout, zmedian, ngals, sum_mass, sum_mass_std, lambda_gr,mass_err_gr, lambda_ri, mass_err_ri,lambda_iz,mass_err_iz,M200_GMM, lambda_gr_red, lambda_ri_red, lambda_iz_red, lambda_gr_blue, lambda_ri_blue, lambda_iz_blue,iz_flag))
-        #fd.write("{:10d} {:6.3f}  {:6.3f}     {:4d}      {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f} {:6.3f} {:3.0f} {:6.4f} {:6.3f} {:6.3f} {:6.3f} {:6.3f} {:6.3f}\n".format(halo,zout, zmedian, ngals, sum_mass, sum_mass_std, lambda_gr, lambda_ri, lambda_iz,mass_err_iz,M200_GMM,iz_flag, lambda_gr_red, lambda_ri_red, lambda_iz_red, lambda_gr_blue, lambda_ri_blue, lambda_iz_blue))
-
-    #fd.close()
-
+        logging.debug('{:10d}  {:4d}   {:6.3f}   {:6.3f} {:6.4f} {:6.3f} {:6.4f} {:6.4f}'.format(
+            halo, ngals, sum_mass, sum_mass_std,lambda_iz,mass_std_iz,lambda_gr_err_jk,ssfr_weight_iz))
+        
     halo_out = np.array(halo_out)
     zout_out = np.array(zout_out)
     ngals_out = np.array(ngals_out)
@@ -246,12 +238,4 @@ def haloStellarMass ( filename="vt-stellar-masses.txt", outfile="vt-halos-stella
     tbhdu=pf.BinTableHDU.from_columns(cols)
     tbhdu.writeto(outfile,clobber=True)
 
-
-
-
-
-
-
-
-
-
+    logging.info('Returning from clusterSMass_orig.haloStellarMass()')
