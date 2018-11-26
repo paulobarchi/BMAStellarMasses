@@ -1,7 +1,9 @@
 import numpy as np
 from astropy.io import fits
+import logging
 
 def read_fits(filename):
+    logging.debug('Starting helperFunctions.read_fits()')
     h=fits.open(filename)
     d=h[1].data
     id = d['COADD_OBJECTS_ID']
@@ -36,10 +38,13 @@ def read_fits(filename):
         'GR_P_COLOR':GR_P_COLOR,'RI_P_COLOR':RI_P_COLOR,'IZ_P_COLOR':IZ_P_COLOR,'GR_P_MEMBER':GR_P_MEMBER,'RI_P_MEMBER':RI_P_MEMBER,'IZ_P_MEMBER':IZ_P_MEMBER,\
         'DIST_TO_CENTER':DIST_TO_CENTER,'GRP_RED':GRP_RED,'GRP_BLUE':GRP_BLUE,'RIP_RED':RIP_RED,'RIP_BLUE':RIP_BLUE,'IZP_RED':IZP_RED,'IZP_BLUE':IZP_BLUE}
 
+    logging.debug('Returning from helperFunctions.read_fits()')
     return inputDataDict
 
 
 def read_afterburner(filename, a, b):
+    logging.debug('Starting helperFunctions.read_afterburner()')
+
     h=fits.open(filename)
     d=h[1].data
     d=d[a:b] # JCB: to divide and conquer
@@ -78,6 +83,8 @@ def read_afterburner(filename, a, b):
     inputDataDict = {'id':id,'haloid':haloid,'i':i,'ierr':ierr,'gr':g-r,'ri':r-i,'iz':i-z,'grerr':grerr,'rierr':rierr,'izerr':izerr,'zed':zed, \
         'GR_P_COLOR':GR_P_COLOR,'RI_P_COLOR':RI_P_COLOR,'IZ_P_COLOR':IZ_P_COLOR,'P_RADIAL':P_RADIAL,'P_REDSHIFT':P_REDSHIFT,'P_MEMBER':P_MEMBER,\
         'DIST_TO_CENTER':DIST_TO_CENTER,'GRP_RED':GRP_RED,'GRP_BLUE':GRP_BLUE,'RIP_RED':RIP_RED,'RIP_BLUE':RIP_BLUE,'IZP_RED':IZP_RED,'IZP_BLUE':IZP_BLUE}
+
+    logging.debug('Returning from helperFunctions.read_afterburner()')
 
     return inputDataDict
 
