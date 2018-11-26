@@ -132,7 +132,9 @@ def combineBMAStellarMassOutput(stellarMassOutPrefix):
     '''
     Note: to read a subset of data, columns = ['column1','column2']; data = loadfiles(filenames,columns=columns)
     '''
-    
+    import logging
+    logging.info('Starting combineCat.combineBMAStellarMassOutput()')
+
     fileNames = sorted(glob.glob(stellarMassOutPrefix+'*'))
     # Call function and load all data sets
     data = loadfiles(fileNames) 
@@ -185,3 +187,5 @@ def combineBMAStellarMassOutput(stellarMassOutPrefix):
     names = ['MEM_MATCH_ID','Z','ID','gr_o','gr_o_err','gi_o','gi_o_err','kri','kri_err','kii','kii_err','iobs','distmod','rabs','iabs','mcMass','taMass','mass','mass_err','ssfr','ssfr_std','mass_weight_age','mass_weight_age_err','best_model','best_zmet','zmet','best_chisq','GR_P_COLOR','RI_P_COLOR','IZ_P_COLOR','P_RADIAL','P_REDSHIFT','P_MEMBER','DIST_TO_CENTER','GRP_RED','GRP_BLUE','RIP_RED','RIP_BLUE','IZP_RED','IZP_BLUE']
     array_list = [hostid,zg,galid,gro,gro_err,gio,gio_err,kri,kri_err,kii,kii_err,iobs,distmod,rabs,iabs,mcMass,taMass,mass,mass_err,ssfr,ssfr_std,mass_weight_age,mass_weight_age_err,best_model,best_zmet,zmet,best_chisq,grpc,ripc,izpc,grpm,ripm,izpm,dist2c,grpr,grpb,ripr,ripb,izpr,izpb]
     fits.write(array_list, names=names)
+    
+    logging.info('Returning from combineCat.combineBMAStellarMassOutput()')
