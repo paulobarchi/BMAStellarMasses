@@ -1,11 +1,13 @@
 import numpy as np
+import logging
 # reload(loadPopColors); simha=loadPopColors.doallnames( "/Users/annis/Code/fsps/simha/",lib="basel"); keys = np.fromiter(iter(simha.values()),dtype="a100");
 
 # do them all
 #   lib can be miles or basel
 
 # Feb17 Antonella modification: mass weighted ages are computed in loadsplines, for now only simha SFH is allowed
-def doall ( dir = "simha/", lib="basel") :
+def doAll ( dir = "simha/", lib="basel") :
+    logging.debug('Starting loadPopColors.doAll()')
     data = []
     zmets = []
     metallicites_basel = [10,14,17, 20, 22]
@@ -39,11 +41,17 @@ def doall ( dir = "simha/", lib="basel") :
                             file = "s-" + str(metal) + "-" +str(start) + "-"
                             file = file + str(trunc) + "-" + str(tau) + str("%4.3f" % theta)
                             file = dir + file + ".mags"
+
                             #print counter, file; counter += 1
+
+                            logging.debug('metal: {m}; start: {s}; trunc: {trunc}; tau: {tau}; theta: {theta}'.format(
+                                m = metal, s = start, trunc = trunc, tau = tau, theta = theta))
 
                             gr,ri,iz,zY,grr,gir,kii,kri,ml,sfr,age,mass_weight_age = loadSplines(file,start,trunc,tau,theta)
                             data.append([gr,ri,iz,zY,grr,gir,kii,kri,ml,sfr,age,mass_weight_age])
                             zmets.append(zmet)
+
+    logging.debug('Returning from loadPopColors.doAll()')
                         
     return data,zmets
 
@@ -87,6 +95,8 @@ def doallnames ( dir = "simha/", lib="basel") :
 #20.000  5.5250 -70.0000   0.0000 -70.0000  99.000  99.000  99.000  99.000  99.000
 
 def loadSplines ( filename,start,trunc,tau,theta ) :
+    logging.debug('Starting loadPopColors.loadSplines()')
+
     from scipy.interpolate import interp1d
     from scipy.interpolate import UnivariateSpline
 
@@ -117,6 +127,7 @@ def loadSplines ( filename,start,trunc,tau,theta ) :
     age = UnivariateSpline(zed[ix], age[ix], s=0)
     mass_weight_age = UnivariateSpline(zed[ix], mass_weight_age[ix], s=0)
 
+    logging.debug('Returning from loadPopColors.loadSplines()')
     return gr,ri,iz,zY,grr,gir,kii,kri,ml,sfr,age,mass_weight_age
     
 
@@ -198,18 +209,6 @@ def mass_age_simha(age,start,trunc,tau,theta):
         mass_age = num/den
 
     return mass_age
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # end
