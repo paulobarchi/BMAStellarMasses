@@ -1,6 +1,6 @@
 import numpy as np
 import loadPopColors
-import helperfunctions
+#import helperfunctions
 #import weightedstats as ws
 #import pyfits as pf
 from astropy.io import fits as pf
@@ -14,10 +14,14 @@ def calc (inputDataDict, outfile, indir="simha/", lib="miles") :
     from scipy.stats import chi2
     import CosmologicalDistance
     import os
+    import logging
+
+    logging.debug('Starting smass.calc()')
+
     cd = CosmologicalDistance.CosmologicalDistance()
     ldistDict = dict()
     splineDict = dict()
-    splines, zmet = loadPopColors.doall(indir, lib=lib)
+    splines, zmet = loadPopColors.doAll(indir, lib=lib)
     id  = inputDataDict["id"]
     haloid  = inputDataDict["haloid"]
     i  = inputDataDict["i"]
@@ -65,7 +69,9 @@ def calc (inputDataDict, outfile, indir="simha/", lib="miles") :
     #size = 10
     for galaxy in range(0,size) :
         zed = allzed[galaxy]
-        print galaxy+1,"  of  ",size,"    z = ",zed
+
+        logging.debug('{i} of {len}, z = {z}'.format(
+            i = galaxy+1, len = size, z = zed))
 
         rest_gr,rest_gi,weight,chisqs = [], [],[],[]
         masslight, sfrs,ages, zmets,kii, kri = [],[],[],[],[],[]
@@ -333,11 +339,7 @@ def calc (inputDataDict, outfile, indir="simha/", lib="miles") :
     cols=pf.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21,col22,col23,col24,col25,col26,col27,col28,col29,col30,col31,col32,col33,col34,col35,col36,col37,col38,col39,col40])
     tbhdu=pf.BinTableHDU.from_columns(cols)
     tbhdu.writeto(outfile,clobber=True)
-
-    print
-    print 'Exiting smass.py'
-    print
-
+    
     data = np.array([out_id, out_haloid, out_gr, out_stdgr, out_gi, out_stdgi, \
         out_kri, out_stdkri, out_kii, out_stdkii, out_iobs, out_distmod, \
         out_rabs, out_iabs, out_mass_gr, out_mass_gi, out_mass, out_stdmass, \
@@ -353,6 +355,8 @@ def calc (inputDataDict, outfile, indir="simha/", lib="miles") :
     #np.savetxt(outfile+".dat", data.T, "%d,%d,%6.3f,%6.4f,%6.3f,%6.4f,%6.3f,%6.4f,%6.3f,%6.4f,\
     #     %6.3f,%6.3f,%6.3f,%6.3f,%6.3f,%6.3f,%6.3f,%6.3f,%6.3f,%6.4f,%6.3f,%6.3f,%6.3f,%d,%6.3f, %6.3f,%6.3f,%6.3f,%6.3f,%6.3f,%6.3f,%6.3f,%6.4f,%6.3f,%6.3f,%6.3f,%6.3f,%6.3f, %6.3f")
     #os.system("cat {} >> {}; rm {}".format(outfile+".dat", outfile, outfile+".dat"))
+
+    logging.debug('Returning from smass.calc()')
 
 
 def taylorMass (gi, iabs) :
