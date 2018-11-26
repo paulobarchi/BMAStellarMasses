@@ -4,6 +4,7 @@
 import numpy
 import math
 import sys
+import logging
 
 # if scipy exists, replace the bad integration method by a scipy function
 try:
@@ -54,6 +55,9 @@ class CosmologicalDistance:
     tolerance = 1e-6
     
     def __init__(self, omega_m=0.3, omega_l=0.7, h0=0.7):
+
+        logging.debug('Starting CosmologicalDistance.__init__()')
+
         """Initialize the universe parameters
         
         omega_m is the matter content of the Universe (dark and baryonic)
@@ -62,8 +66,19 @@ class CosmologicalDistance:
         """
         self.set_omega_m(omega_m)
         self.set_omega_l(omega_l)
-        self.set_omega_k()
+        omega_k = self.set_omega_k()
         self.h0 = h0
+
+        logging.debug('omega_m = {omega_m}'.format(
+            omega_m=omega_m))
+        logging.debug('omega_l = {omega_l}'.format(
+            omega_l=omega_l))
+        logging.debug('omega_m = {omega_m}'.format(
+            omega_m=omega_m))
+        logging.debug('omega_k = {omega_k}'.format(
+            omega_k=omega_k))
+
+	logging.debug('Returning from CosmologicalDistance.__init__()')
 
 
     # Helper functions
