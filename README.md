@@ -77,7 +77,7 @@ There's a backup of these files in the following path (current "default value" f
 
 	inputPath: /data/des61.a/data/pbarchi/galaxyClusters/simha_miles_Nov2016/
 
-If a path to these files does not exist for some reason, you can leave *inputPath* blank and specify a compressed file (*.tar.gz*) in the *tarFile* item -- also available in this repository (see Subsection **[Files]**).
+If a path to these files does not exist for some reason, you can leave *inputPath* blank and specify a compressed file (*.tar.gz*) in the *tarFile* item (see Subsection **[Files]**).
 
 #### [Files]
 
